@@ -1,0 +1,11 @@
+users:
+  - name: narek
+    password: "{{ 'narek123' | password_hash('sha512') }}"
+    groups: sudo
+  - name: hayk
+    password: "{{ 'hayk123' | password_hash('sha512') }}"
+    groups: sudo
+  - name: rob
+    password: "{{ 'rob123' | password_hash('sha512') }}"
+    groups: sudo
+

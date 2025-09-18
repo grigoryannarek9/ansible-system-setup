@@ -1,0 +1,7 @@
+# Users Registration Time
+
+{% for user in users %}
+User: {{ user.name }}
+Registered at: {{ lookup('pipe', 'date "+%Y-%m-%d %H:%M:%S"') }}
+---------------------------------------
+{% endfor %}

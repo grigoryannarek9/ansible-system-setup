@@ -1,0 +1,44 @@
+---
+- name: Create users
+  ansible.builtin.user:
+    name: "{{ item.name }}"
+    password: "{{ item.password }}"
+    groups: "{{ item.groups }}"
+    state: present
+    create_home: yes
+    shell: /bin/bash
+  loop: "{{ users }}"
+
+
+- name: Install nginx only for one server
+  ansible.builtin.apt:
+    name: nginx
+    state: present
+    update_cache: yes
+  when: "'webservers' in group_names"
+  notify: restart nginx
+
+
+- name: Install MySql on dbserver
+  ansible.builtin.apt:
+    name: mysql-server
+    state: present
+    update_cache: yes
+  when: "'dbservers' in group_names"
+  notify: restart mysql
+
+
+- name: Deploy users registartion files on the servers
+  ansible.builtin.template:
+    src: users_registration.j2
+    dest: /home/users_registration.txt
+    owner: root
+    group: root
+    mode: '0644'
+
+
+
+
+
+
+
